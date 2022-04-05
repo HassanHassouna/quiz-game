@@ -1,17 +1,43 @@
-import React, { useEffect, useState, useMemo } from "react"
+import React, { useEffect, useState, useMemo, useContext } from "react"
 import { Row, Col, Radio, Spin, Space, Button } from "antd"
+import Countdown from "../../components/Countdown"
 import axios from "axios"
 import "./style.css"
-const Quiz = () => {
+import { UserContext } from "../../App"
+import { useNavigate } from "react-router-dom"
+
+const Quiz = ({ score, setScore }) => {
   const [data, setData] = useState([])
   const [selected, setSelected] = useState("")
   const [hasSubmit, setHasSubmit] = useState(false)
   const [question, setQuestion] = useState(0)
+
+  const user = useContext(UserContext)
+  const navigate = useNavigate()
+  const onSubmit = () => {
+    setHasSubmit(true)
+    setTimeout(() => {
+      setQuestion(question + 1)
+      setHasSubmit(false)
+      setSelected("")
+    }, 2000)
+  }
   useEffect(() => {
     axios.get("https://opentdb.com/api.php?amount=100").then((res) => {
       setData(res.data.results)
     })
   }, [])
+  useEffect(() => {
+    if (data.length && selected === data[question].correct_answer) {
+      setScore(score + 10)
+    }
+  }, [hasSubmit])
+
+  useEffect(() => {
+    if (question === 5) {
+      navigate("/end")
+    }
+  }, [question])
 
   const shuffleAnswers = () => {
     const possibleAnswers = []
@@ -25,12 +51,24 @@ const Quiz = () => {
       shuffledAnswers.push(possibleAnswers[randomIndex])
       possibleAnswers.splice(randomIndex, 1)
     }
-    return shuffledAnswers
+    return shuffledAnswers.filter((answer) => answer !== undefined)
+  }
+
+  const fiftyFiftyAnswer = () => {
+    const possibleAnswers = []
+    const randomIndex = Math.floor(
+      Math.random() * data[question].incorrect_answers.length
+    )
+    possibleAnswers.push(data[question].incorrect_answers[randomIndex])
+
+    console.log(possibleAnswers)
+    return possibleAnswers
   }
 
   const answers = useMemo(() => {
     if (data.length) return shuffleAnswers()
   }, [data, question])
+  console.log(answers)
 
   if (!data.length)
     return (
@@ -58,12 +96,17 @@ const Quiz = () => {
   return (
     <div className="container">
       <h1>Welcome To quiz</h1>
+      <div className="username">
+        <h2>Hello {user}</h2> <h3>Your points {score}</h3>
+      </div>
       <Row>
         <Col span={24}>
           <h2>Question {question + 1}</h2>
-          <p>{data[question].question}</p>
+          <p dangerouslySetInnerHTML={{ __html: data[question].question }} />
         </Col>
       </Row>
+
+      <Countdown onSubmit={onSubmit} questionIndex={question} />
 
       <Radio.Group
         onChange={(e) => {
@@ -71,13 +114,38 @@ const Quiz = () => {
         }}
         buttonStyle="solid"
       >
+        {answers.length > 3 && (
+          <Button
+            className="fiftyfifty"
+            type="primary"
+            shape="round"
+            onClick={() => {
+              const answers = fiftyFiftyAnswer()
+              setData(
+                data.map((item, index) => {
+                  if (index === question) {
+                    return {
+                      ...item,
+                      incorrect_answers: answers,
+                    }
+                  }
+                  return item
+                })
+              )
+
+              fiftyFiftyAnswer()
+            }}
+          >
+            50/50
+          </Button>
+        )}
         <Row>
           <Col span={12}>
             <Radio.Button
               className={`${fetchRadioAnswer(answers[0])} option`}
               value={answers[0]}
             >
-              {answers[0]}
+              <div dangerouslySetInnerHTML={{ __html: answers[0] }} />
             </Radio.Button>
           </Col>
           <Col span={12}>
@@ -85,43 +153,35 @@ const Quiz = () => {
               className={`${fetchRadioAnswer(answers[1])} option`}
               value={answers[1]}
             >
-              {answers[1]}
+              <div dangerouslySetInnerHTML={{ __html: answers[1] }} />
             </Radio.Button>
           </Col>
         </Row>
         <Row>
           <Col span={12}>
-            <Radio.Button
-              className={`${fetchRadioAnswer(answers[2])} option`}
-              value={answers[2]}
-            >
-              {answers[2]}
-            </Radio.Button>
+            {answers[2] && (
+              <Radio.Button
+                className={`${fetchRadioAnswer(answers[2])} option`}
+                value={answers[2]}
+              >
+                <div dangerouslySetInnerHTML={{ __html: answers[2] }} />
+              </Radio.Button>
+            )}
           </Col>
           <Col span={12}>
-            <Radio.Button
-              className={`${fetchRadioAnswer(answers[3])} option`}
-              value={answers[3]}
-            >
-              {answers[3]}
-            </Radio.Button>
+            {answers[3] && (
+              <Radio.Button
+                className={`${fetchRadioAnswer(answers[3])} option`}
+                value={answers[3]}
+              >
+                <div dangerouslySetInnerHTML={{ __html: answers[3] }} />
+              </Radio.Button>
+            )}
           </Col>
         </Row>
       </Radio.Group>
 
-      <Button
-        onClick={() => {
-          setHasSubmit(true)
-
-          setTimeout(() => {
-            setQuestion(question + 1)
-            setHasSubmit(false)
-            setSelected("")
-          }, 2000)
-        }}
-        type="link"
-        block
-      >
+      <Button onClick={() => onSubmit()} type="link" block>
         Submit Answer
       </Button>
     </div>

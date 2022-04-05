@@ -1,13 +1,6 @@
 .input {
-  width: 25% !important;
+  width: 25vw !important;
   padding: 12px 20px !important;
   margin: 8px 0 !important;
   border-radius: 24px !important;
-}
-.container {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
 }
