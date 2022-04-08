@@ -9,7 +9,8 @@ const Home = ({ setUser }) => {
   return (
     <div className="container">
       <h1 style={{ color: "#fc2352" }}>
-        Welcome to <img src={Logo} alt="" />Quiz
+        Welcome to <img src={Logo} alt="" style={{ width: "20vw" }} />
+        Quiz
       </h1>
       <Input
         placeholder="Enter Your Name"

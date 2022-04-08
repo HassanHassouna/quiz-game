@@ -7,6 +7,7 @@ import { UserContext } from "../../App"
 import { useNavigate } from "react-router-dom"
 
 const Quiz = ({ score, setScore }) => {
+
   const [data, setData] = useState([])
   const [selected, setSelected] = useState("")
   const [hasSubmit, setHasSubmit] = useState(false)
@@ -22,6 +23,7 @@ const Quiz = ({ score, setScore }) => {
       setSelected("")
     }, 2000)
   }
+
   useEffect(() => {
     axios.get("https://opentdb.com/api.php?amount=100").then((res) => {
       setData(res.data.results)
@@ -68,7 +70,6 @@ const Quiz = ({ score, setScore }) => {
   const answers = useMemo(() => {
     if (data.length) return shuffleAnswers()
   }, [data, question])
-  console.log(answers)
 
   if (!data.length)
     return (
@@ -184,7 +185,7 @@ const Quiz = ({ score, setScore }) => {
         </Row>
       </Radio.Group>
 
-      <Button onClick={() => onSubmit()} type="link" block>
+      <Button className="submit" onClick={() => onSubmit()} type="link" block>
         Submit Answer
       </Button>
     </div>

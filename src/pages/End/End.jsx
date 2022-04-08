@@ -10,6 +10,7 @@ const End = ({ score }) => {
       reward()
     }, 2000)
   }, [])
+  
   return (
     <div className="container">
       <h1>The End</h1>
@@ -20,5 +21,4 @@ const End = ({ score }) => {
     </div>
   )
 }
-
 export default End
