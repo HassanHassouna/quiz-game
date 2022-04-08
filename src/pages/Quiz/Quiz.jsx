@@ -34,7 +34,7 @@ const Quiz = ({ score, setScore }) => {
   }, [hasSubmit])
 
   useEffect(() => {
-    if (question === 5) {
+    if (question === 25) {
       navigate("/end")
     }
   }, [question])
@@ -95,20 +95,23 @@ const Quiz = ({ score, setScore }) => {
 
   return (
     <div className="container">
-      <h1>Welcome To quiz</h1>
       <div className="username">
         <h2>Hello {user}</h2> <h3>Your points {score}</h3>
       </div>
       <Row>
         <Col span={24}>
           <h2>Question {question + 1}</h2>
-          <p dangerouslySetInnerHTML={{ __html: data[question].question }} />
+          <p
+            className="question"
+            dangerouslySetInnerHTML={{ __html: data[question].question }}
+          />
         </Col>
       </Row>
 
       <Countdown onSubmit={onSubmit} questionIndex={question} />
 
       <Radio.Group
+        className="radio-group"
         onChange={(e) => {
           setSelected(e.target.value)
         }}
@@ -139,8 +142,8 @@ const Quiz = ({ score, setScore }) => {
             50/50
           </Button>
         )}
-        <Row>
-          <Col span={12}>
+        <Row className="row">
+          <Col className="col" span={12}>
             <Radio.Button
               className={`${fetchRadioAnswer(answers[0])} option`}
               value={answers[0]}
@@ -148,7 +151,7 @@ const Quiz = ({ score, setScore }) => {
               <div dangerouslySetInnerHTML={{ __html: answers[0] }} />
             </Radio.Button>
           </Col>
-          <Col span={12}>
+          <Col className="col" span={12}>
             <Radio.Button
               className={`${fetchRadioAnswer(answers[1])} option`}
               value={answers[1]}
@@ -157,8 +160,8 @@ const Quiz = ({ score, setScore }) => {
             </Radio.Button>
           </Col>
         </Row>
-        <Row>
-          <Col span={12}>
+        <Row className="row">
+          <Col className="col" span={12}>
             {answers[2] && (
               <Radio.Button
                 className={`${fetchRadioAnswer(answers[2])} option`}
@@ -168,7 +171,7 @@ const Quiz = ({ score, setScore }) => {
               </Radio.Button>
             )}
           </Col>
-          <Col span={12}>
+          <Col className="col" span={12}>
             {answers[3] && (
               <Radio.Button
                 className={`${fetchRadioAnswer(answers[3])} option`}

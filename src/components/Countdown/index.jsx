@@ -1,5 +1,6 @@
 import React from "react"
 import { CountdownCircleTimer } from "react-countdown-circle-timer"
+import "./style.css"
 
 const renderTime = ({ remainingTime }) => {
   if (remainingTime === 0) {
@@ -28,7 +29,7 @@ const Countdown = ({ questionIndex, onSubmit }) => {
           onSubmit()
           return { shouldRepeat: false, delay: 1 }
         }}
-        size={120}
+        size={180}
       >
         {renderTime}
       </CountdownCircleTimer>
