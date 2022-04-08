@@ -1,5 +1,5 @@
 .container {
-  height: 100vh;
+  height: 95vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,6 +13,7 @@
 .question {
   font-size: 1.5vw;
   font-weight: bold;
+  width:50vw;
   text-align: center;
 }
 .radio-group {
@@ -20,6 +21,7 @@
   flex-direction: column !important;
   align-items: center !important;
   gap: 10px !important;
+  width: 50vw !important;
 }
 .col {
   display: flex !important;

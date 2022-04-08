@@ -7,7 +7,6 @@ import { UserContext } from "../../App"
 import { useNavigate } from "react-router-dom"
 
 const Quiz = ({ score, setScore }) => {
-
   const [data, setData] = useState([])
   const [selected, setSelected] = useState("")
   const [hasSubmit, setHasSubmit] = useState(false)
@@ -94,10 +93,14 @@ const Quiz = ({ score, setScore }) => {
     return ""
   }
 
+  const capitalFirstLetter = (string) => {
+    console.log(string.slice(1))
+    return string.charAt(0).toUpperCase() + string.slice(1)
+  }
   return (
     <div className="container">
       <div className="username">
-        <h2>Hello {user}</h2> <h3>Your points {score}</h3>
+        <h2>Hello {capitalFirstLetter(user)}</h2> <h3>Your points {score}</h3>
       </div>
       <Row>
         <Col span={24}>

@@ -4,3 +4,9 @@
   margin: 8px 0 !important;
   border-radius: 24px !important;
 }
+
+@media screen and (max-width: 600px) {
+  .input {
+    width: 50vw !important;
+  }
+}
