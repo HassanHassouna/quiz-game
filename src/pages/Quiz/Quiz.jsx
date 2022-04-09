@@ -35,7 +35,7 @@ const Quiz = ({ score, setScore }) => {
   }, [hasSubmit])
 
   useEffect(() => {
-    if (question === 25) {
+    if (question === 5) {
       navigate("/end")
     }
   }, [question])

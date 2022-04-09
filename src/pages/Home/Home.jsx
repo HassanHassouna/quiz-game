@@ -4,7 +4,7 @@ import { Input, Button } from "antd"
 import { useNavigate } from "react-router-dom"
 import { CheckOutlined } from "@ant-design/icons"
 import Logo from "../../assets/logo.png"
-const Home = ({ setUser }) => {
+const Home = ({ setUser, user }) => {
   const navigate = useNavigate()
   return (
     <div className="container">
@@ -25,7 +25,11 @@ const Home = ({ setUser }) => {
         icon={<CheckOutlined />}
         shape="round"
         onClick={() => {
-          navigate("/quiz")
+          if (!user) {
+            alert("Please Enter Your Name")
+          } else {
+            navigate("/quiz")
+          }
         }}
       >
         Start Quiz

@@ -13,12 +13,22 @@ function App() {
     <UserContext.Provider value={user}>
       <div className="App">
         <Routes>
-          <Route path="/*" element={<Home setUser={setUser} />} />
+          <Route path="/*" element={<Home user={user} setUser={setUser} />} />
           <Route
             path="quiz"
             element={<Quiz score={score} setScore={setScore} />}
           />
-          <Route path="end" element={<End score={score} />} />
+          <Route
+            path="end"
+            element={
+              <End
+                setUser={setUser}
+                setScore={setScore}
+                user={user}
+                score={score}
+              />
+            }
+          />
         </Routes>
       </div>
     </UserContext.Provider>
