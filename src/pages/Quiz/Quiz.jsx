@@ -188,7 +188,12 @@ const Quiz = ({ score, setScore }) => {
         </Row>
       </Radio.Group>
 
-      <Button className="submit" onClick={() => onSubmit()} type="link" block>
+      <Button
+        className="submit"
+        onClick={() => onSubmit()}
+        type="primary"
+        shape="round"
+      >
         Submit Answer
       </Button>
     </div>

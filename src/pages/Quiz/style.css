@@ -53,6 +53,9 @@
 
 .submit {
   font-size: 1.5vw !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 @media screen and (max-width: 600px) {
